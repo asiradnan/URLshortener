@@ -30,7 +30,7 @@ def shortened_url(request,url):
             return Response({"shorturl": "http://sshhoorrtt.vercel.app/" + x.short_url, "count": x.count })
         shorturl = generator()
     x = URL.objects.create(url=url,short_url = shorturl)
-    return Response({"name":"sshhoorrtt.vercel.app/"+x.short_url, "count": x.count })
+    return Response({"shorturl":"sshhoorrtt.vercel.app/"+x.short_url, "count": x.count })
 
 def bypass(request,shorturl):
     try:
