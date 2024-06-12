@@ -4,6 +4,9 @@ from rest_framework.response import Response
 from URLS.models import URL
 from django.utils import timezone
 import secrets,string
+from django.utils import timezone
+from datetime import timedelta
+
 
 def generator():
     characters = string.ascii_letters + string.digits
@@ -13,21 +16,21 @@ def generator():
 def shortened_url(request,url):
     try:
         x = URL.objects.get(url=url)
-        return Response({"shorturl": "http://127.0.0.1:8000/" + x.short_url, "count": x.count })
+        return Response({"shorturl": "http://sshhoorrtt.vercel.app/" + x.short_url, "count": x.count })
     except URL.DoesNotExist:
         pass
     shorturl = generator()
-    x = URL.objects.get(short_url=shorturl)
-    while(x):
-        if x.time < 7:
+    x = URL.objects.filter(short_url=shorturl)
+    while(x.exists()):
+        if timezone.now() - timedelta(days=5) < x.first().time:
             x.time = timezone.now()
             x.url = url
             x.count = 0
             x.save()
-            return Response({"shorturl": "http://127.0.0.1:8000/" + x.short_url, "count": x.count })
+            return Response({"shorturl": "http://sshhoorrtt.vercel.app/" + x.short_url, "count": x.count })
         shorturl = generator()
     x = URL.objects.create(url=url,short_url = shorturl)
-    return Response({"name":"127.0.0.1:8000/"+x.short_url, "count": x.count })
+    return Response({"name":"sshhoorrtt.vercel.app/"+x.short_url, "count": x.count })
 
 def bypass(request,shorturl):
     try:
