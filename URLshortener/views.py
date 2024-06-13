@@ -37,7 +37,7 @@ def bypass(request,shorturl):
         x = URL.objects.get(short_url=shorturl)
         x.count+=1
         x.save()
-        return redirect(x.url)
+        return redirect("http://" + x.url)
     except URL.DoesNotExist:
         pass
 @api_view(["GET"])
