@@ -20,7 +20,7 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^shorten/(?P<url>.+)/?$',views.shortened_url,name="shortened_url"),
+    re_path(r'^shorten/(?P<url>.+)$',views.shortened_url,name="shortened_url"),
     path("count/<str:shorturl>",views.count,name="count"),
     path("<str:shorturl>",views.bypass,name="bypass")
 ]
