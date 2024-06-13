@@ -6,7 +6,7 @@ from django.utils import timezone
 import secrets,string
 from django.utils import timezone
 from datetime import timedelta
-
+import urllib.parse
 
 def generator():
     characters = string.ascii_letters + string.digits
@@ -14,6 +14,8 @@ def generator():
 
 @api_view(["GET"])
 def shortened_url(request,url):
+    url = urllib.parse.unquote(url)
+
     try:
         x = URL.objects.get(url=url)
         return Response({"shorturl": "https://chottourl.vercel.app/" + x.short_url, "count": x.count })
