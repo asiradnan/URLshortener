@@ -14,8 +14,9 @@ def generator():
 
 @api_view(["GET"])
 def shortened_url(request,url):
+    print(url)
     url = urllib.parse.unquote(url)
-
+    print(url)
     try:
         x = URL.objects.get(url=url)
         return Response({"shorturl": "https://chottourl.vercel.app/" + x.short_url, "count": x.count })
