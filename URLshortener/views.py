@@ -16,7 +16,7 @@ def generator():
 def shortened_url(request,url):
     try:
         x = URL.objects.get(url=url)
-        return Response({"shorturl": "https://sshhoorrtt.vercel.app/" + x.short_url, "count": x.count })
+        return Response({"shorturl": "https://chottourl.vercel.app/" + x.short_url, "count": x.count })
     except URL.DoesNotExist:
         pass
     shorturl = generator()
@@ -27,10 +27,10 @@ def shortened_url(request,url):
             x.url = url
             x.count = 0
             x.save()
-            return Response({"shorturl": "https://sshhoorrtt.vercel.app/" + x.short_url, "count": x.count })
+            return Response({"shorturl": "https://chottourl.vercel.app/" + x.short_url, "count": x.count })
         shorturl = generator()
     x = URL.objects.create(url=url,short_url = shorturl)
-    return Response({"shorturl":"https://sshhoorrtt.vercel.app/"+x.short_url, "count": x.count })
+    return Response({"shorturl":"https://chottourl.vercel.app/"+x.short_url, "count": x.count })
 
 def bypass(request,shorturl):
     try:
