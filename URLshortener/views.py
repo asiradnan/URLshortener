@@ -10,7 +10,7 @@ from datetime import timedelta
 
 def generator():
     characters = string.ascii_letters + string.digits
-    return ''.join(secrets.choice(characters) for _ in range(8))
+    return ''.join(secrets.choice(characters) for _ in range(4))
 
 @api_view(["GET"])
 def shortened_url(request,url):
