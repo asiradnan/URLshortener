@@ -7,6 +7,11 @@ import secrets,string
 from django.utils import timezone
 from datetime import timedelta
 import urllib.parse
+import qrcode
+from io import BytesIO
+import base64
+
+
 
 def generator():
     characters = string.ascii_letters + string.digits
@@ -14,27 +19,43 @@ def generator():
 
 @api_view(["GET"])
 def shortened_url(request,url):
-    print(url)
     url = urllib.parse.unquote(url)
-    print(url)
     try:
         x = URL.objects.get(url=url)
-        return Response({"shorturl": "https://chottourl.vercel.app/" + x.short_url, "count": x.count })
+        shorturl = "https://chottourl.vercel.app/" + x.short_url
+        img = qrcode.make(shorturl)
+        buffer = BytesIO()
+        img.save(buffer, format="PNG")
+        buffer.seek(0)
+        img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+        return Response({"shorturl": shorturl, "count": x.count,"qrcode":img_base64 })
     except URL.DoesNotExist:
-        pass
-    shorturl = generator()
-    x = URL.objects.filter(short_url=shorturl)
-    while(x.exists()):
-        if timezone.now() - timedelta(days=5) < x.first().time:
-            x.time = timezone.now()
-            x.url = url
-            x.count = 0
-            x.save()
-            return Response({"shorturl": "https://chottourl.vercel.app/" + x.short_url, "count": x.count })
         shorturl = generator()
-    x = URL.objects.create(url=url,short_url = shorturl)
-    return Response({"shorturl":"https://chottourl.vercel.app/"+x.short_url, "count": x.count })
-
+        x = URL.objects.filter(short_url=shorturl)
+        while(x.exists()):
+            if timezone.now() - timedelta(days=5) > x.first().time:
+                x.time = timezone.now()
+                x.url = url
+                x.count = 0
+                x.save()
+                shorturl = "https://chottourl.vercel.app/" + x.short_url
+                img = qrcode.make(shorturl)
+                buffer = BytesIO()
+                img.save(buffer, format="PNG")
+                buffer.seek(0)
+                img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+                return Response({"shorturl": shorturl, "count": x.count, "qrcode":img_base64 })
+            shorturl = generator()
+            x = URL.objects.filter(short_url=shorturl)
+        x = URL.objects.create(url=url,short_url = shorturl)
+        shorturl = "https://chottourl.vercel.app/" + x.short_url
+        img = qrcode.make(shorturl)
+        buffer = BytesIO()
+        img.save(buffer, format="PNG")
+        buffer.seek(0)
+        img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+        return Response({"shorturl": shorturl, "count": x.count, "qrcode":img_base64 })
+    
 def bypass(request,shorturl):
     try:
         x = URL.objects.get(short_url=shorturl)
