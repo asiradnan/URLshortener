@@ -25,7 +25,7 @@ def shortened_url(request,url):
         shorturl = "https://chottourl.vercel.app/" + x.short_url
         img = qrcode.make(shorturl)
         buffer = BytesIO()
-        img.save(buffer, format="PNG")
+        img.save(buffer)
         buffer.seek(0)
         img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
         return Response({"shorturl": shorturl, "count": x.count,"qrcode":img_base64 })
@@ -41,7 +41,7 @@ def shortened_url(request,url):
                 shorturl = "https://chottourl.vercel.app/" + x.short_url
                 img = qrcode.make(shorturl)
                 buffer = BytesIO()
-                img.save(buffer, format="PNG")
+                img.save(buffer)
                 buffer.seek(0)
                 img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
                 return Response({"shorturl": shorturl, "count": x.count, "qrcode":img_base64 })
@@ -51,7 +51,7 @@ def shortened_url(request,url):
         shorturl = "https://chottourl.vercel.app/" + x.short_url
         img = qrcode.make(shorturl)
         buffer = BytesIO()
-        img.save(buffer, format="PNG")
+        img.save(buffer)
         buffer.seek(0)
         img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
         return Response({"shorturl": shorturl, "count": x.count, "qrcode":img_base64 })
