@@ -11,8 +11,6 @@ import qrcode
 from io import BytesIO
 import base64
 
-
-
 def generator():
     characters = string.ascii_letters + string.digits
     return ''.join(secrets.choice(characters) for _ in range(4))
@@ -47,6 +45,9 @@ def shortened_url(request,url):
                 img.save(buffer)
                 buffer.seek(0)
                 img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+                tc, createdtc = TotalCount.objects.get_or_create(id=1)
+                tc.total_count +=1 
+                tc.save()
                 return Response({"shorturl": shorturl, "count": x.count, "qrcode":img_base64 })
             shorturl = generator()
             x = URL.objects.filter(short_url=shorturl)
