@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     'corsheaders'
 ]
 CORS_ALLOWED_ORIGINS = [
-    "https://asiradnan.github.io",
-    "http://asiradnan.github.io",
+    "https://asiradnan.github.io/",
+    "http://asiradnan.github.io/",
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
