@@ -1,7 +1,7 @@
-from django.shortcuts import redirect,get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from URLS.models import URL
+from URLS.models import URL, TotalCount
 from django.utils import timezone
 import secrets,string
 from django.utils import timezone
@@ -28,6 +28,9 @@ def shortened_url(request,url):
         img.save(buffer)
         buffer.seek(0)
         img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+        tc, createdtc = TotalCount.objects.get_or_create(id=1)
+        tc.total_count +=1 
+        tc.save()
         return Response({"shorturl": shorturl, "count": x.count,"qrcode":img_base64 })
     except URL.DoesNotExist:
         shorturl = generator()
@@ -54,6 +57,9 @@ def shortened_url(request,url):
         img.save(buffer)
         buffer.seek(0)
         img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+        tc, createdtc = TotalCount.objects.get_or_create(id=1)
+        tc.total_count +=1 
+        tc.save()
         return Response({"shorturl": shorturl, "count": x.count, "qrcode":img_base64 })
     
 def bypass(request,shorturl):
@@ -61,6 +67,9 @@ def bypass(request,shorturl):
         x = URL.objects.get(short_url=shorturl)
         x.count+=1
         x.save()
+        tc,createdtc = TotalCount.objects.get_or_create(id=1)
+        tc.total_count +=1 
+        tc.save()
         return redirect("http://" + x.url)
     except URL.DoesNotExist:
         pass

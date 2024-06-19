@@ -5,3 +5,6 @@ class URL(models.Model):
     short_url = models.CharField(max_length=16)
     count  = models.IntegerField(default=0)
     time = models.DateTimeField(default=timezone.now)
+
+class TotalCount(models.Model):
+    total_count = models.PositiveBigIntegerField(default=0)
