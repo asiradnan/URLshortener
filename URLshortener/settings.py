@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-70**ly$g(5!%cqkm&$72vs($h&2qv)y&5v@x0&=6ma2o^@5w@9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['chottourl.vercel.app',"127.0.0.1"]
+ALLOWED_HOSTS = ['.asiradnan.com',"127.0.0.1"]
 
 
 # Application definition
@@ -85,11 +85,11 @@ WSGI_APPLICATION = 'URLshortener.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER':'postgres',
-        'PASSWORD': os.environ.get('pass'),
-        'HOST': 'roundhouse.proxy.rlwy.net',
-        'PORT': '33023'
+        'NAME': 'urlshortnerdb',
+        'USER' : 'postgres',
+        'PASSWORD' : 'root',
+        'HOST' : '127.0.0.1',
+        'PORT' : '5432'
     }
 }
 

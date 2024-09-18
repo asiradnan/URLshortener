@@ -20,7 +20,7 @@ def shortened_url(request,url):
     url = urllib.parse.unquote(url)
     try:
         x = URL.objects.get(url=url)
-        shorturl = "https://chottourl.vercel.app/" + x.short_url
+        shorturl = "https://chottourlserver.asiradnan.com/" + x.short_url
         img = qrcode.make(shorturl)
         buffer = BytesIO()
         img.save(buffer)
@@ -39,7 +39,7 @@ def shortened_url(request,url):
                 x.url = url
                 x.count = 0
                 x.save()
-                shorturl = "https://chottourl.vercel.app/" + x.short_url
+                shorturl = "https://chottourlserver.asiradnan.com/" + x.short_url
                 img = qrcode.make(shorturl)
                 buffer = BytesIO()
                 img.save(buffer)
@@ -52,7 +52,7 @@ def shortened_url(request,url):
             shorturl = generator()
             x = URL.objects.filter(short_url=shorturl)
         x = URL.objects.create(url=url,short_url = shorturl)
-        shorturl = "https://chottourl.vercel.app/" + x.short_url
+        shorturl = "https://chottourlserver.asiradnan.com/" + x.short_url
         img = qrcode.make(shorturl)
         buffer = BytesIO()
         img.save(buffer)
