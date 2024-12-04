@@ -69,7 +69,7 @@ def bypass(request,shorturl):
         x.count+=1
         x.save()
         tc,createdtc = TotalCount.objects.get_or_create(id=1)
-        tc.total_count +=1 
+        tc.click_count +=1 
         tc.save()
         return redirect("http://" + x.url)
     except URL.DoesNotExist:
@@ -81,4 +81,9 @@ def count(request,shorturl):
         return Response({"count":x.count})
     except URL.DoesNotExist:
         pass
+
+@api_view(["GET"])
+def totalcount(request):
+    tc,createdtc = TotalCount.objects.get_or_create(id=1)
+    return Response({"total_count":tc.total_count,"click_count":tc.click_count})
 

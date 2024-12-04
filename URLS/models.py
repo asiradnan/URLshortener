@@ -8,3 +8,4 @@ class URL(models.Model):
 
 class TotalCount(models.Model):
     total_count = models.PositiveBigIntegerField(default=0)
+    click_count = models.PositiveBigIntegerField(default=0)
