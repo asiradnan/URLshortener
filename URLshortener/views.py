@@ -85,5 +85,5 @@ def count(request,shorturl):
 @api_view(["GET"])
 def totalcount(request):
     tc,createdtc = TotalCount.objects.get_or_create(id=1)
-    return Response({"total_count":tc.total_count,"click_count":tc.click_count})
+    return Response({"total_count":tc.total_count,"click_count":tc.click_count,"active_links":URL.objects.count()})
 
