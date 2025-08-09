@@ -36,3 +36,9 @@ def get_actual_url(request, short_code):
         stat.save()
         return redirect(existing.actual_url)
     return Response({"error":"URL not found"}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def stats(request):
+    stat, flag = Statistics.objects.get_or_create(pk = 1)
+    serializer = StatisticsSerializer(stat)
+    return Response(serializer.data, status  = status.HTTP_200_OK)
