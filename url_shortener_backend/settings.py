@@ -55,7 +55,7 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'URL Shortener',
+    'TITLE': 'Chotto URL',
     'DESCRIPTION': 'URL Shortener Backend',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
